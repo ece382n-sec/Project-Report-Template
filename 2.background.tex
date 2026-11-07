@@ -1,4 +1,6 @@
-\section{Background}
-\label{sec:background}
+\section{Background and Experimental Scope}
+Augury identifies an AoP prefetcher on Apple processors: a stream of pointer-array accesses can cause hardware to fetch locations referenced by future entries. This creates opportunities to expose pointer values through cache state, including values beyond the bounds of the software's intended array~\cite{augury}. Its reverse-engineering experiments motivate our tests of training requirements, alignment, stride, prefetch distance, and address boundaries.
 
-The necessary background to understand your project.
+GoFetch shows that the activation conditions are broader than the original AoP model suggests. Explicit architectural dereferencing of the candidate pointers is not always necessary. Its refined model includes a history filter, a ``do-not-scan'' hint associated with cache lines, and restrictions involving the source and target's 4\,GB-aligned virtual-address region~\cite{gofetch}. These mechanisms make cache residency and experiment ordering important: a negative measurement can reflect suppressed retriggering rather than the absence of a DMP.
+
+Our experiments target controlled local programs and synthetic secrets on the team's hardware. We distinguish detecting DMP-induced cache activity, demonstrating a leakage primitive, and demonstrating cross-process leakage. Success at the first stage does not establish the later stages. macOS on M1 is our replication baseline; Asahi Linux on M1 and the planned M4 tests are comparison environments, not completed results.

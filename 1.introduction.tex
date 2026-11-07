@@ -1,5 +1,6 @@
-\section{Introduction}
-\label{sec:introduction}
+\section{Research Problem and Progress}
+Our research question is how Apple's DMP can turn memory contents into observable cache activity, and how consistently that behavior appears across access patterns, operating systems, and processor generations. Conventional constant-time programming avoids secret-dependent branches and memory addresses. A DMP complicates this model because hardware can interpret program data as addresses and fetch the corresponding locations even when software does not explicitly dereference those values.
 
-The introduction of your awesome project.
+Our original proposal focused on reproducing GoFetch and exploring additional prefetcher side channels on the M1. We have refined this scope to examine M1 DMP exploitation more broadly, using Augury and GoFetch as complementary foundations~\cite{augury,gofetch}. Augury supplies the initial array-of-pointers (AoP) characterization and pointer-leakage primitives; GoFetch supplies a refined activation model and demonstrations against constant-time software.
 
+At this stage, we have run experiments aimed at validating Augury's DMP activation criteria and reverse engineering its behavior. The preliminary results below summarize the available timing measurements; we do not present quantitative activation thresholds or reverse-engineered parameters in this report. GoFetch activation, end-to-end exploit demonstrations, and the Asahi Linux and M4 investigations remain future work. We do not yet claim a new attack or a demonstrated defense.

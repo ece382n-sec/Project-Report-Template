@@ -1,4 +1,23 @@
-\section{Evaluation}
-\label{sec:evaluation}
+\section{Preliminary Results and Limitations}
+The available evidence consists of setup notes and two output files, \texttt{baseline.out} and \texttt{aop.out}. Each file begins with the same pair of hexadecimal addresses, followed by columns labeled \texttt{test} and \texttt{train}, and contains 32 measurement rows. Table~\ref{tab:logs} summarizes these rows without assigning unverified units or meanings to the columns.
 
-Explain your evaluation setup and results.
+\begin{table}[t]
+\caption{Descriptive summary of the supplied logs. Values use the logs' raw units. These are not attack-success measurements.}
+\label{tab:logs}
+\centering
+\begin{tabular}{lrr}
+\toprule
+Statistic & Baseline & AoP \\
+\midrule
+Measurement rows & 32 & 32 \\
+\texttt{test} range & 0--42 & 0--42 \\
+\texttt{test} median & 41 & 0 \\
+\texttt{train} range & 417--1250 & 458--1333 \\
+\texttt{train} median & 1000 & 812.5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The AoP run has a lower median \texttt{train} value, but the ranges overlap substantially. All \texttt{test} values in both files are below the notes' provisional threshold of 82. If these values are in calibrated nanoseconds, that threshold would classify every \texttt{test} observation as a hit in both conditions. Consequently, these logs alone do not demonstrate an AoP-specific hit/miss separation or establish a causal DMP effect. They also do not establish a full speedup curve, prefetch distance, confidence threshold, boundary behavior, or exploit accuracy.
+
+Interpreting these logs causally requires the generating code and configuration, the meaning and units of each column, whether the target was architecturally accessed, and the eviction procedure. We therefore limit our quantitative observations to the descriptive summary above and do not infer activation thresholds, reverse-engineered parameters, or attack success rates from these files.

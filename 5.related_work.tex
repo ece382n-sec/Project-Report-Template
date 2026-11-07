@@ -1,4 +1,17 @@
-\section{Related Work}
-\label{sec:related_work}
+\section{Remaining Tasks and Completion Plan}
+We will complete the work in the following dependency order, using the existing phased project plan as a guide rather than treating its proposed experiments as completed work.
 
-The related work of your project~\cite{Dijkstra:SOSP:1967}.
+\paragraph{Consolidate Augury evidence.}
+Document each activation and reverse-engineering experiment with its exact configuration and compare the measured trends against Augury. Repeat ambiguous cases with positive and negative controls. This produces the validated baseline for subsequent comparisons.
+
+\paragraph{Validate GoFetch activation.}
+Run the selected activation patterns and the history, cache-state, and address-region experiments. The completion criterion is reproducible agreement or a documented discrepancy with working controls, not merely successful execution of the artifact.
+
+\paragraph{Run exploit examples.}
+Demonstrate Augury's out-of-bounds read and ASLR break, followed by the GoFetch conditional-swap example. Reserve additional effort for eviction-set construction and cross-process observation. Record success rates and failure cases across repeated runs; separate any single-process demonstration from a cross-process result.
+
+\paragraph{Execute the novel comparisons.}
+Check Asahi Linux setup and M4 availability early, then reuse the validated activation harnesses for both investigations. If resources constrain the work, prioritize the comparison with working measurement infrastructure and preserve a clearly documented boundary on the untested cases. Neither platform study will be described as completed until it has independent controls and repeatable measurements.
+
+\paragraph{Analyze and write.}
+Compare results across configurations, distinguish replication from new observations, and assess potential defenses only to the extent supported by the data. The main risks are scheduling noise, timer resolution, eviction reliability, platform differences, and hardware availability. We will address these through recalibration, staged validation, and early platform checks. The final deliverable will include the report, reproducible experiment instructions, raw measurements, and analysis scripts, with full key extraction optional.

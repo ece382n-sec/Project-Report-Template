@@ -1,9 +1,20 @@
-\section{Threat Model}
-\label{sec:threat}
+\section{Approach}
+\subsection{Measurement and Controls}
+We begin with timing calibration to distinguish cached and uncached accesses. The supplied setup notes report hit measurements around 0--42\,ns, misses around 125--167\,ns, and a provisional 82\,ns classification threshold. These are calibration observations, not universal constants. We will recalibrate for each machine and operating system and retain raw distributions rather than relying only on a threshold. The observed timing granularity does not by itself establish the timer's implementation or its cause.
 
-Describe your threat model.
+For each experiment, we will record the chip, operating-system version, compiler options, timer conversion, scheduling configuration, memory layout, and cache-preparation procedure. Repeated runs and randomized trial order will help distinguish a reproducible effect from scheduling noise or residual cache state. Positive controls will establish that the measurement channel detects a known cached target; negative controls will remove or invalidate the relevant pointer pattern while preserving comparable memory traffic.
 
-\section{Our Approach}
-\label{sec:approach}
+\subsection{Augury Replication}
+We compare an AoP access pattern with a computed-address baseline and examine whether future, architecturally unaccessed targets become cached. Aggregate speedup is useful supporting evidence, but the target-cache experiment is needed to attribute behavior to pointer-dependent prefetching. We then vary one factor at a time: training length, pointer alignment, stride, lookahead distance, and proximity to the reported 16\,KiB and 2\,MiB boundary effects. Published values are comparison points, not measurements from our hardware.
 
-Describe your approach to the problem.
+After consolidating the activation results, we will run Augury's out-of-bounds pointer-read and address-space layout randomization (ASLR) break demonstrations. Evaluation will report classification accuracy, unsuccessful trials, and the memory-layout assumptions required. We will keep these demonstrations separate from the activation experiments already run.
+
+\subsection{GoFetch Replication}
+We will first reproduce selected activation patterns that distinguish GoFetch's model from Augury's initial characterization: activation without explicit pointer dereferences, processing of in-bounds pointer values, and effects arising from a cache-line fill. We will then vary intervening unique pointers to study history filtering, compare L1-only with L1-and-L2 eviction to test retriggering behavior, and test the 4\,GB-aligned source/target restriction.
+
+Once these controls are reliable, we will reproduce a constant-time conditional-swap leakage example with synthetic secrets. We will validate ordinary eviction and observation first, then the compound eviction-set machinery needed for the selected cross-process demonstration. We will report timing distributions and secret-classification accuracy, including false positives. Full cryptographic key extraction remains a stretch goal rather than a required midpoint or final replication result.
+
+\subsection{Novel Investigation}
+Our first direction is to extend the characterization under Asahi Linux on M1. We will port the timing and memory-management portions of the harness, recalibrate them, and repeat selected activation and virtual-address-boundary tests. This asks whether the different operating-system environment exposes behavior that our macOS experiments cannot exercise. We will compare against prior Linux observations before describing any result as novel.
+
+Our second direction is to test both papers' activation patterns on M4. The initial comparison will retain the M1 access patterns while recalibrating timing and cache controls for M4. If a signal disappears, we will check the positive controls, execution placement, cache preparation, and accessible address layouts before attributing the change to mitigation. A negative result establishes only that the tested pattern did not produce detectable leakage under the recorded conditions. If the evidence supports changed or restricted DMP behavior, we will discuss candidate defenses, clearly separating observed behavior from hypotheses about undocumented hardware mechanisms.
